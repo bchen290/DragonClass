@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "class_table")
-public class Class {
+public class DragonClass {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "course_id")
@@ -20,7 +20,7 @@ public class Class {
     @ColumnInfo(name = "course_prerequisites")
     private String coursePrerequisites;
 
-    public Class(@NonNull String courseID, @NonNull String courseDescription, @NonNull String coursePrerequisites) {
+    public DragonClass(@NonNull String courseID, @NonNull String courseDescription, @NonNull String coursePrerequisites) {
         this.courseID = courseID;
         this.courseDescription = courseDescription;
         this.coursePrerequisites = coursePrerequisites;
