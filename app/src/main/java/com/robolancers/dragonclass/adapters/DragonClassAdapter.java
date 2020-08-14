@@ -1,7 +1,6 @@
 package com.robolancers.dragonclass.adapters;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +12,17 @@ import com.robolancers.dragonclass.room.entities.DragonClass;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class DragonClassAdapter extends RecyclerView.Adapter<DragonClassAdapter.DragonClassViewHolder>{
     private final LayoutInflater inflater;
     private List<DragonClass> classes;
+    private Context context;
 
     public DragonClassAdapter(Context context) {
         inflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @NonNull
@@ -60,6 +62,10 @@ public class DragonClassAdapter extends RecyclerView.Adapter<DragonClassAdapter.
 
         public void bind(DragonClass dragonClass) {
             dragonClassItemView.setText(dragonClass.getCourseID());
+
+            itemView.setOnClickListener(view -> {
+                new AlertDialog.Builder(context).setTitle(dragonClass.getCourseID()).setMessage("Description: " + dragonClass.getCourseDescription() + "\nPrerequisites: " + dragonClass.getCoursePrerequisites()).show();
+            });
         }
     }
 }

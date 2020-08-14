@@ -42,19 +42,10 @@ public abstract class DragonClassDatabase extends RoomDatabase {
 
                         String[] courseBlockTitleSplit = courseBlockTitleElement.text().split(" ");
 
-                        Elements courseChildren = course.children();
-                        boolean hasPrerequisites = false;
-                        String prerequisites = "N/A";
+                        String courseText = course.text();
+                        String[] courseTextSplit = courseText.split("Prerequisites:");
 
-                        for (Element child : courseChildren) {
-                            if (hasPrerequisites) {
-                                prerequisites = child.text();
-                            }
-
-                            if(child.text().equals("Prerequisites:")) {
-                                hasPrerequisites = true;
-                            }
-                        }
+                        String prerequisites = courseTextSplit.length == 2 ? courseTextSplit[1] : "N/A";
 
                         DragonClass dragonClass = new DragonClass(
                                 courseBlockTitleSplit[0] + courseBlockTitleSplit[1],
