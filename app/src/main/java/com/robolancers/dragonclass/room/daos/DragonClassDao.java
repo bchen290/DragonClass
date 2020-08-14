@@ -10,7 +10,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 @Dao
-public interface ClassDao {
+public interface DragonClassDao {
     @Insert
     void insert(DragonClass dragonClass);
 
