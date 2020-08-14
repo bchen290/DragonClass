@@ -1,0 +1,19 @@
+package com.robolancers.dragonclass.room.daos;
+
+import com.robolancers.dragonclass.room.entities.DragonClass;
+
+import java.util.List;
+
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+
+@Dao
+public interface ClassDao {
+    @Insert
+    void insert(DragonClass dragonClass);
+
+    @Query("SELECT * from class_table ORDER BY course_id ASC")
+    LiveData<List<DragonClass>> getAllClasses();
+}
