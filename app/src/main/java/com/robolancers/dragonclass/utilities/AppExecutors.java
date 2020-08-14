@@ -45,7 +45,7 @@ public class AppExecutors {
 
     public static AppExecutors getInstance() {
         if(instance == null) {
-            synchronized (DragonClassDatabase.class) {
+            synchronized (AppExecutors.class) {
                 // Check again after synchronization
                 if(instance == null) {
                     instance = new AppExecutors();
