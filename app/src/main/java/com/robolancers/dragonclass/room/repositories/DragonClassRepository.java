@@ -16,7 +16,7 @@ public class DragonClassRepository {
     private DragonClassDao dragonClassDao;
     private LiveData<List<DragonClass>> allClasses;
 
-    DragonClassRepository(Application application) {
+    public DragonClassRepository(Application application) {
         DragonClassDatabase db = DragonClassDatabase.getDatabase(application);
         dragonClassDao = db.dragonClassDao();
         allClasses = dragonClassDao.getAllClasses();
