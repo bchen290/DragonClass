@@ -61,7 +61,7 @@ public class DragonClassAdapter extends RecyclerView.Adapter<DragonClassAdapter.
         }
 
         public void bind(DragonClass dragonClass) {
-            dragonClassItemView.setText(dragonClass.getCourseID());
+            dragonClassItemView.setText(dragonClass.getCourseID() + ": " + dragonClass.getCourseName());
 
             itemView.setOnClickListener(view -> {
                 new AlertDialog.Builder(context).setTitle(dragonClass.getCourseID()).setMessage("Description: " + dragonClass.getCourseDescription() + "\nPrerequisites: " + dragonClass.getCoursePrerequisites()).show();

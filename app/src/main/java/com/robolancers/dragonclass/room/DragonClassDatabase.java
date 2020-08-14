@@ -13,7 +13,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.concurrent.Executors;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -42,13 +43,16 @@ public abstract class DragonClassDatabase extends RoomDatabase {
 
                         String[] courseBlockTitleSplit = courseBlockTitleElement.text().split(" ");
 
+                        String title = Arrays.stream(courseBlockTitleSplit, 2, courseBlockTitleSplit.length - 2).reduce("", (subtotal, element) -> subtotal + " " + element);
+
                         String courseText = course.text();
                         String[] courseTextSplit = courseText.split("Prerequisites:");
 
                         String prerequisites = courseTextSplit.length == 2 ? courseTextSplit[1] : "N/A";
 
                         DragonClass dragonClass = new DragonClass(
-                                courseBlockTitleSplit[0] + courseBlockTitleSplit[1],
+                                courseBlockTitleSplit[0] + " " + courseBlockTitleSplit[1],
+                                title,
                                 courseBlockDescriptionElement.text(),
                                 prerequisites
                         );

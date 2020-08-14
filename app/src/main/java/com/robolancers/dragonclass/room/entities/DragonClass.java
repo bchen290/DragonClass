@@ -13,6 +13,10 @@ public class DragonClass {
     private String courseID;
 
     @NonNull
+    @ColumnInfo(name = "course_name")
+    private String courseName;
+
+    @NonNull
     @ColumnInfo(name = "course_description")
     private String courseDescription;
 
@@ -20,8 +24,9 @@ public class DragonClass {
     @ColumnInfo(name = "course_prerequisites")
     private String coursePrerequisites;
 
-    public DragonClass(@NonNull String courseID, @NonNull String courseDescription, @NonNull String coursePrerequisites) {
+    public DragonClass(@NonNull String courseID, @NonNull String courseName, @NonNull String courseDescription, @NonNull String coursePrerequisites) {
         this.courseID = courseID;
+        this.courseName = courseName;
         this.courseDescription = courseDescription;
         this.coursePrerequisites = coursePrerequisites;
     }
@@ -29,6 +34,11 @@ public class DragonClass {
     @NonNull
     public String getCourseID() {
         return courseID;
+    }
+
+    @NonNull
+    public String getCourseName() {
+        return courseName;
     }
 
     @NonNull
