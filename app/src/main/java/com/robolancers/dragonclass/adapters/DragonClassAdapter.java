@@ -19,7 +19,7 @@ public class DragonClassAdapter extends RecyclerView.Adapter<DragonClassAdapter.
     private final LayoutInflater inflater;
     private List<DragonClass> classes;
 
-    DragonClassAdapter(Context context) {
+    public DragonClassAdapter(Context context) {
         inflater = LayoutInflater.from(context);
     }
 
@@ -39,7 +39,7 @@ public class DragonClassAdapter extends RecyclerView.Adapter<DragonClassAdapter.
         }
     }
 
-    void setClasses(List<DragonClass> dragonClasses) {
+    public void setClasses(List<DragonClass> dragonClasses) {
         this.classes = dragonClasses;
         notifyDataSetChanged();
     }

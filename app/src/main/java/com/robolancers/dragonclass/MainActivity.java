@@ -1,38 +1,34 @@
 package com.robolancers.dragonclass;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
 
-import com.robolancers.dragonclass.utilities.RetrievalCallback;
-import com.robolancers.dragonclass.utilities.RetrieveClasses;
+import com.robolancers.dragonclass.adapters.DragonClassAdapter;
+import com.robolancers.dragonclass.room.viewmodels.DragonClassViewModel;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.TextNode;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
-
-public class MainActivity extends AppCompatActivity implements RetrievalCallback {
-    TextView testTextView;
+public class MainActivity extends AppCompatActivity {
+    private DragonClassViewModel dragonClassViewModel;
+    private RecyclerView recyclerView;
+    private DragonClassAdapter dragonClassAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        testTextView = findViewById(R.id.test);
+        recyclerView =  findViewById(R.id.class_recycler_view);
+        dragonClassAdapter = new DragonClassAdapter(this);
 
-        RetrieveClasses retrieveClasses = new RetrieveClasses();
-        retrieveClasses.retrieveClasses(this);
-    }
+        recyclerView.setAdapter(dragonClassAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-    @Override
-    public void onComplete(final String result) {
-        runOnUiThread(() -> testTextView.setText(result));
+        dragonClassViewModel = ViewModelProviders.of(this).get(DragonClassViewModel.class);
+        dragonClassViewModel.getAllClasses().observe(this, dragonClasses -> {
+            dragonClassAdapter.setClasses(dragonClasses);
+        });
     }
 }
