@@ -33,11 +33,6 @@ public class MainActivity extends AppCompatActivity implements RetrievalCallback
 
     @Override
     public void onComplete(final String result) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                testTextView.setText(result);
-            }
-        });
+        runOnUiThread(() -> testTextView.setText(result));
     }
 }

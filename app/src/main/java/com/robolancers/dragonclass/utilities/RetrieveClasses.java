@@ -16,23 +16,20 @@ public class RetrieveClasses {
         final StringBuilder result = new StringBuilder();
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    document = Jsoup.connect("http://catalog.drexel.edu/coursedescriptions/quarter/undergrad/cs/").get();
-                    Elements courseBlocks = document.getElementsByClass("courseblock");
+        executorService.execute(() -> {
+            try {
+                document = Jsoup.connect("http://catalog.drexel.edu/coursedescriptions/quarter/undergrad/cs/").get();
+                Elements courseBlocks = document.getElementsByClass("courseblock");
 
-                    for (Element course : courseBlocks) {
-                        Element courseblocktitle = course.getElementsByClass("courseblocktitle").first();
-                        result.append(courseblocktitle.text());
-                        result.append("\n");
-                    }
-
-                    callback.onComplete(result.toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
+                for (Element course : courseBlocks) {
+                    Element courseblocktitle = course.getElementsByClass("courseblocktitle").first();
+                    result.append(courseblocktitle.text());
+                    result.append("\n");
                 }
+
+                callback.onComplete(result.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
 
