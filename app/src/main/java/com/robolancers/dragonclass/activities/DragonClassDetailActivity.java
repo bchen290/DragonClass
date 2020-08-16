@@ -12,6 +12,9 @@ import com.robolancers.dragonclass.adapters.DependencyAdapter;
 import com.robolancers.dragonclass.room.entities.DragonClass;
 import com.robolancers.dragonclass.utilities.Utility;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class DragonClassDetailActivity extends AppCompatActivity {
@@ -40,7 +43,13 @@ public class DragonClassDetailActivity extends AppCompatActivity {
             courseID.setText(dragonClass.getCourseID());
             courseDescription.setText(dragonClass.getCourseDescription());
 
-            dependencyAdapter.setCourseIDs(Utility.getInstance().dependencies.get(dragonClass.getCourseID()));
+            List<String> courses = Utility.getInstance().dependencies.get(dragonClass.getCourseID());
+
+            if (courses != null && !courses.isEmpty()) {
+                dependencyAdapter.setCourseIDs(courses);
+            } else {
+                dependencyAdapter.setCourseIDs(Collections.singletonList("This course has no dependencies"));
+            }
         }
     }
 }
