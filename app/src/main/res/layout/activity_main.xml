@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".activities.DragonMajorClassesActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/class_recycler_view"

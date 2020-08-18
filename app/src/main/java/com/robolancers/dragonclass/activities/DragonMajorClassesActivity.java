@@ -1,4 +1,4 @@
-package com.robolancers.dragonclass;
+package com.robolancers.dragonclass.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.robolancers.dragonclass.R;
 import com.robolancers.dragonclass.adapters.DragonClassAdapter;
 import com.robolancers.dragonclass.room.DragonClassDatabase;
 import com.robolancers.dragonclass.room.entities.DragonClass;
@@ -26,7 +27,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class DragonMajorClassesActivity extends AppCompatActivity {
     private DragonClassViewModel dragonClassViewModel;
     private RecyclerView recyclerView;
     private DragonClassAdapter dragonClassAdapter;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         AppExecutors.getInstance().diskIO().execute(() -> {
-            DragonClassDatabase.getDatabase(MainActivity.this).dragonClassDao().deleteAll();
+            DragonClassDatabase.getDatabase(DragonMajorClassesActivity.this).dragonClassDao().deleteAll();
 
             try {
                 Document document = Jsoup.connect("http://catalog.drexel.edu/coursedescriptions/quarter/undergrad/cs/").get();
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                             prerequisites
                     );
 
-                    DragonClassDatabase.getDatabase(MainActivity.this).dragonClassDao().insert(dragonClass);
+                    DragonClassDatabase.getDatabase(DragonMajorClassesActivity.this).dragonClassDao().insert(dragonClass);
                     dependencies.put(dragonClass.getCourseID(), new ArrayList<>());
 
                     for (String prerequisite : prerequisitesSplit) {
@@ -99,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         dragonClassViewModel = ViewModelProviders.of(this).get(DragonClassViewModel.class);
-        dragonClassViewModel.getAllClasses().observe(this, dragonClasses -> {
-            dragonClassAdapter.setClasses(dragonClasses);
-        });
+        dragonClassViewModel.getAllClasses().observe(this, dragonClasses -> dragonClassAdapter.setClasses(dragonClasses));
     }
 }
