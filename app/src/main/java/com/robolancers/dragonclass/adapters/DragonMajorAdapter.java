@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.robolancers.dragonclass.R;
+import com.robolancers.dragonclass.room.entities.DragonMajor;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class DragonMajorAdapter extends RecyclerView.Adapter<DragonMajorAdapter.DragonMajorViewHolder>{
     private final LayoutInflater inflater;
-    private List<String> classes;
+    private List<DragonMajor> classes;
     private Context context;
 
     public DragonMajorAdapter(Context context) {
@@ -40,7 +41,7 @@ public class DragonMajorAdapter extends RecyclerView.Adapter<DragonMajorAdapter.
         }
     }
 
-    public void setDragonMajors(List<String> dragonMajors) {
+    public void setDragonMajors(List<DragonMajor> dragonMajors) {
         this.classes = dragonMajors;
         notifyDataSetChanged();
     }
@@ -59,8 +60,8 @@ public class DragonMajorAdapter extends RecyclerView.Adapter<DragonMajorAdapter.
             dragonMajorItemView = itemView.findViewById(R.id.textView);
         }
 
-        public void bind(String dragonMajorName) {
-            dragonMajorItemView.setText(dragonMajorName);
+        public void bind(DragonMajor dragonMajor) {
+            dragonMajorItemView.setText(dragonMajor.getMajorName());
 
             itemView.setOnClickListener(view -> {
                 // Send user to main activity
