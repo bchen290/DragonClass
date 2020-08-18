@@ -27,11 +27,24 @@ public class DragonClass implements Parcelable {
     @ColumnInfo(name = "course_prerequisites")
     private String coursePrerequisites;
 
-    public DragonClass(@NonNull String courseID, @NonNull String courseName, @NonNull String courseDescription, @NonNull String coursePrerequisites) {
+    @NonNull
+    @ColumnInfo(name = "parent_major_name")
+    private String parentMajorName;
+
+    public DragonClass(@NonNull String courseID, @NonNull String courseName, @NonNull String courseDescription, @NonNull String coursePrerequisites, @NonNull String parentMajorName) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.courseDescription = courseDescription;
         this.coursePrerequisites = coursePrerequisites;
+        this.parentMajorName = parentMajorName;
+    }
+
+    protected DragonClass(Parcel in) {
+        courseID = in.readString();
+        courseName = in.readString();
+        courseDescription = in.readString();
+        coursePrerequisites = in.readString();
+        parentMajorName = in.readString();
     }
 
     @NonNull
@@ -54,24 +67,9 @@ public class DragonClass implements Parcelable {
         return coursePrerequisites;
     }
 
-    protected DragonClass(Parcel in) {
-        courseID = in.readString();
-        courseName = in.readString();
-        courseDescription = in.readString();
-        coursePrerequisites = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(courseID);
-        dest.writeString(courseName);
-        dest.writeString(courseDescription);
-        dest.writeString(coursePrerequisites);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+    @NonNull
+    public String getParentMajorName() {
+        return parentMajorName;
     }
 
     public static final Creator<DragonClass> CREATOR = new Creator<DragonClass>() {
@@ -85,4 +83,18 @@ public class DragonClass implements Parcelable {
             return new DragonClass[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(courseID);
+        parcel.writeString(courseName);
+        parcel.writeString(courseDescription);
+        parcel.writeString(coursePrerequisites);
+        parcel.writeString(parentMajorName);
+    }
 }
