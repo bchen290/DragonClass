@@ -7,11 +7,12 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 @Dao
 public interface DragonMajorDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(DragonMajor dragonMajor);
 
     @Query("DELETE FROM major_table")
