@@ -14,15 +14,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".activities.DragonMajorListActivity"></activity>
-        <activity android:name=".activities.DragonClassDetailActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.DragonMajorListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.DragonClassDetailActivity" />
+        <activity android:name=".activities.DragonMajorClassesActivity" />
     </application>
-
 </manifest>
