@@ -5,14 +5,15 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+@Entity(tableName = "major_table")
 public class DragonMajor implements Parcelable {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "major_name")
     private String majorName;
-
 
     public DragonMajor(@NonNull String majorName) {
         this.majorName = majorName;
