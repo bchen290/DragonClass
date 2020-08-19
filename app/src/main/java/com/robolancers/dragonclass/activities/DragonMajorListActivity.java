@@ -62,7 +62,7 @@ public class DragonMajorListActivity extends AppCompatActivity {
                 for (Element link : links) {
                     DragonClassDatabase.getDatabase(DragonMajorListActivity.this).dragonMajorDao().insert(new DragonMajor(link.text()));
 
-                    document = Jsoup.connect("http://catalog.drexel.edu/coursedescriptions/quarter/undergrad/cs/").get();
+                    document = Jsoup.connect("http://catalog.drexel.edu" + link.attr("href")).get();
                     Elements courseBlocks = document.getElementsByClass("courseblock");
                     HashMap<String, ArrayList<String>> dependencies = Utility.getInstance().dependencies;
 
@@ -94,7 +94,7 @@ public class DragonMajorListActivity extends AppCompatActivity {
                         for (String prerequisite : prerequisitesSplit) {
                             String[] prerequisiteSplit = prerequisite.trim().split(" ");
 
-                            if (!prerequisite.equals("N/A")) {
+                            if (!prerequisite.equals("N/A") && !prerequisite.trim().isEmpty()) {
                                 String prerequisiteCourseID = (prerequisiteSplit[0].replaceAll("\\(", "") + prerequisiteSplit[1]);
 
                                 if (dependencies.containsKey(prerequisiteCourseID)) {
