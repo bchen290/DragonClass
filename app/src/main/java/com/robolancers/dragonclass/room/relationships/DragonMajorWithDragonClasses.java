@@ -5,6 +5,7 @@ import com.robolancers.dragonclass.room.entities.DragonMajor;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
