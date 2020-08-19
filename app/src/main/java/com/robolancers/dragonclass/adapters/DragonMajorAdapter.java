@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.robolancers.dragonclass.R;
+import com.robolancers.dragonclass.activities.DragonMajorClassesActivity;
 import com.robolancers.dragonclass.room.entities.DragonMajor;
 
 import java.util.List;
@@ -64,7 +65,9 @@ public class DragonMajorAdapter extends RecyclerView.Adapter<DragonMajorAdapter.
             dragonMajorItemView.setText(dragonMajor.getMajorName());
 
             itemView.setOnClickListener(view -> {
-                // Send user to main activity
+                Intent intent = new Intent(context, DragonMajorClassesActivity.class);
+                intent.putExtra("DragonMajor", dragonMajor);
+                context.startActivity(intent);
             });
         }
     }
