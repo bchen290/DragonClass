@@ -36,7 +36,6 @@ public class DragonMajorAdapter extends RecyclerView.Adapter<DragonMajorAdapter.
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String filterString = charSequence.toString();
                 dragonMajorsFiltered = filterString.isEmpty() ? dragonMajors : dragonMajors.stream().filter(dragonMajor -> dragonMajor.getMajorName().toLowerCase().contains(filterString.toLowerCase())).collect(Collectors.toList());
-                Log.e("TEST", dragonMajorsFiltered.toString());
 
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = dragonMajorsFiltered;
