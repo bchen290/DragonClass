@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.robolancers.dragonclass.R;
 import com.robolancers.dragonclass.adapters.DragonMajorAdapter;
@@ -124,5 +126,13 @@ public class DragonMajorListActivity extends AppCompatActivity {
 
         dragonMajorViewModel = ViewModelProviders.of(this).get(DragonMajorViewModel.class);
         dragonMajorViewModel.getAllMajors().observe(this, dragonMajors -> dragonMajorAdapter.setDragonMajors(dragonMajors));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        return true;
     }
 }
