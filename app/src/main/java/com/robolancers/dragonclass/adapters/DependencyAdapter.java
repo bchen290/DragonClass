@@ -16,6 +16,7 @@ import com.robolancers.dragonclass.utilities.CourseNotFoundException;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.DependencyViewHolder> {
@@ -68,13 +69,15 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.De
 
             dependencyItemView.setOnClickListener(view -> {
                 if (!courseID.equals("This course has no dependencies")) {
-                    try {
-                        Intent intent = new Intent(context, DragonClassDetailActivity.class);
-                        intent.putExtra("DragonClass", DragonClassDatabase.getDatabase(context).dragonClassDao().getAllClasses().getValue().stream().filter(dragonClass -> dragonClass.getCourseID().equals(courseID)).findFirst().orElseThrow(CourseNotFoundException::new));
-                        context.startActivity(intent);
-                    } catch (CourseNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                        DragonClassDatabase.getDatabase(context).dragonClassDao().getAllClasses().observe((DragonClassDetailActivity) context, dragonClasses -> {
+                            try {
+                                Intent intent = new Intent(context, DragonClassDetailActivity.class);
+                                intent.putExtra("DragonClass", dragonClasses.stream().filter(dragonClass -> dragonClass.getCourseID().equals(courseID)).findFirst().orElseThrow(CourseNotFoundException::new));
+                                context.startActivity(intent);
+                            } catch (CourseNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        });
                 }
             });
         }

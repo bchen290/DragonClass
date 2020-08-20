@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.robolancers.dragonclass.room.entities.DragonMajor;
 import com.robolancers.dragonclass.utilities.Utility;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -57,7 +59,13 @@ public class DragonClassDetailActivity extends AppCompatActivity {
             courseID.setText(dragonClass.getCourseID());
             courseDescription.setText(dragonClass.getCourseDescription());
 
-            List<String> courses = gson.fromJson(dragonClass.getCourseDescription(), type);
+            List<String> courses;
+
+            if (!dragonClass.getDependencies().isEmpty()) {
+                courses = gson.fromJson(dragonClass.getDependencies(), type);
+            } else {
+                courses = new ArrayList<>();
+            }
 
             if (courses != null && !courses.isEmpty()) {
                 dependencyAdapter.setCourseIDs(courses);
