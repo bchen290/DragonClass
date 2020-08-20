@@ -1,12 +1,17 @@
 package com.robolancers.dragonclass.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.robolancers.dragonclass.R;
+import com.robolancers.dragonclass.activities.DragonClassDetailActivity;
+import com.robolancers.dragonclass.room.DragonClassDatabase;
+import com.robolancers.dragonclass.room.entities.DragonClass;
+import com.robolancers.dragonclass.utilities.CourseNotFoundException;
 
 import java.util.List;
 
@@ -60,6 +65,18 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.De
 
         public void bind(String courseID) {
             dependencyItemView.setText(courseID);
+
+            dependencyItemView.setOnClickListener(view -> {
+                if (!courseID.equals("This course has no dependencies")) {
+                    try {
+                        Intent intent = new Intent(context, DragonClassDetailActivity.class);
+                        intent.putExtra("DragonClass", DragonClassDatabase.getDatabase(context).dragonClassDao().getAllClasses().getValue().stream().filter(dragonClass -> dragonClass.getCourseID().equals(courseID)).findFirst().orElseThrow(CourseNotFoundException::new));
+                        context.startActivity(intent);
+                    } catch (CourseNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
     }
 }
