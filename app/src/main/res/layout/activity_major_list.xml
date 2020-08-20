@@ -7,6 +7,37 @@
     android:orientation="vertical"
     tools:context=".activities.DragonMajorListActivity">
 
+    <LinearLayout
+        android:id="@+id/progress_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1"/>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminateOnly="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"/>
+
+        <TextView
+            android:id="@+id/progress_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            android:gravity="center_horizontal|top"
+            android:textSize="24sp"
+            android:text="Placeholder"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dragon_major_recyclerview"
         android:layout_width="match_parent"

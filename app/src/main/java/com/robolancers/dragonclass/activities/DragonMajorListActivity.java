@@ -13,6 +13,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.robolancers.dragonclass.R;
 import com.robolancers.dragonclass.adapters.DragonMajorAdapter;
@@ -40,9 +45,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class DragonMajorListActivity extends AppCompatActivity {
     private RecyclerView dragonMajorRecyclerView;
@@ -50,13 +53,29 @@ public class DragonMajorListActivity extends AppCompatActivity {
 
     private DragonMajorViewModel dragonMajorViewModel;
 
+    private LinearLayout progressHolder;
+    private ProgressBar progressBar;
+    private TextView progressText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_major_list);
 
+        progressBar = findViewById(R.id.progress);
+
+        progressText = findViewById(R.id.progress_text);
+
+        dragonMajorRecyclerView = findViewById(R.id.dragon_major_recyclerview);
+        dragonMajorRecyclerView.setVisibility(View.GONE);
+
+        progressHolder = findViewById(R.id.progress_holder);
+        progressHolder.setVisibility(View.VISIBLE);
+
         AppExecutors.getInstance().diskIO().execute(() -> {
             try {
+                runOnUiThread(() -> progressText.setText("Downloading courses"));
+
                 Document document = Jsoup.connect("http://catalog.drexel.edu/coursedescriptions/quarter/undergrad/")
                         .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36")
                         .maxBodySize(0)
@@ -67,6 +86,7 @@ public class DragonMajorListActivity extends AppCompatActivity {
 
                 for (Element link : links) {
                     DragonClassDatabase.getDatabase(DragonMajorListActivity.this).dragonMajorDao().insert(new DragonMajor(link.text()));
+                    runOnUiThread(() -> progressText.setText("Downloading " + link.text() + "'s classes"));
 
                     document = Jsoup.connect("http://catalog.drexel.edu" + link.attr("href")).get();
                     Elements courseBlocks = document.getElementsByClass("courseblock");
@@ -117,13 +137,17 @@ public class DragonMajorListActivity extends AppCompatActivity {
                         }
                     }
                 }
+
+                runOnUiThread(() -> {
+                    dragonMajorRecyclerView.setVisibility(View.VISIBLE);
+                    progressHolder.setVisibility(View.GONE);
+                });
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
         dragonMajorAdapter = new DragonMajorAdapter(this);
-        dragonMajorRecyclerView = findViewById(R.id.dragon_major_recyclerview);
 
         dragonMajorRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         dragonMajorRecyclerView.setAdapter(dragonMajorAdapter);
