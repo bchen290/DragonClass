@@ -13,7 +13,7 @@ import androidx.room.Query;
 @Dao
 public interface DragonClassDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(DragonClass dragonClass);
+    void insert(DragonClass... dragonClass);
 
     @Query("DELETE FROM class_table")
     void deleteAll();

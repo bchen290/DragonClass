@@ -95,6 +95,11 @@ public class DragonClass implements Parcelable {
         return dependencies;
     }
 
+    @Override
+    public String toString() {
+        return courseID;
+    }
+
     public void setDependencies(@NonNull String dependencies) {
         this.dependencies = dependencies;
     }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,12 +40,15 @@ public class DragonMajorListActivity extends AppCompatActivity {
         progressText = findViewById(R.id.progress_text);
 
         dragonMajorRecyclerView = findViewById(R.id.dragon_major_recyclerview);
-        dragonMajorRecyclerView.setVisibility(View.GONE);
-
         progressHolder = findViewById(R.id.progress_holder);
-        progressHolder.setVisibility(View.VISIBLE);
 
-        Utility.downloadMajorsAndClasses(this, progressText, dragonMajorRecyclerView, progressHolder);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+
+        if (!sharedPreferences.getBoolean("hasDownloaded", false)) {
+            dragonMajorRecyclerView.setVisibility(View.GONE);
+            progressHolder.setVisibility(View.VISIBLE);
+            Utility.downloadMajorsAndClasses(this, progressText, dragonMajorRecyclerView, progressHolder);
+        }
 
         dragonMajorAdapter = new DragonMajorAdapter(this);
 
