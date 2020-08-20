@@ -49,4 +49,9 @@ public class DragonMajor implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(majorName);
     }
+
+    @Override
+    public String toString() {
+        return majorName;
+    }
 }
