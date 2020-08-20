@@ -11,7 +11,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {DragonClass.class, DragonMajor.class}, version = 2, exportSchema = false)
+@Database(entities = {DragonClass.class, DragonMajor.class}, version = 1, exportSchema = false)
 public abstract class DragonClassDatabase extends RoomDatabase {
     public abstract DragonClassDao dragonClassDao();
     public abstract DragonMajorDao dragonMajorDao();

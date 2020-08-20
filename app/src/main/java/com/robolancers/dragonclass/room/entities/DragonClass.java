@@ -31,12 +31,17 @@ public class DragonClass implements Parcelable {
     @ColumnInfo(name = "parent_major_name")
     private String parentMajorName;
 
-    public DragonClass(@NonNull String courseID, @NonNull String courseName, @NonNull String courseDescription, @NonNull String coursePrerequisites, @NonNull String parentMajorName) {
+    @NonNull
+    @ColumnInfo(name = "dependencies")
+    private String dependencies;
+
+    public DragonClass(@NonNull String courseID, @NonNull String courseName, @NonNull String courseDescription, @NonNull String coursePrerequisites, @NonNull String parentMajorName, @NonNull String dependencies) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.courseDescription = courseDescription;
         this.coursePrerequisites = coursePrerequisites;
         this.parentMajorName = parentMajorName;
+        this.dependencies = dependencies;
     }
 
     protected DragonClass(Parcel in) {
@@ -45,7 +50,20 @@ public class DragonClass implements Parcelable {
         courseDescription = in.readString();
         coursePrerequisites = in.readString();
         parentMajorName = in.readString();
+        dependencies = in.readString();
     }
+
+    public static final Creator<DragonClass> CREATOR = new Creator<DragonClass>() {
+        @Override
+        public DragonClass createFromParcel(Parcel in) {
+            return new DragonClass(in);
+        }
+
+        @Override
+        public DragonClass[] newArray(int size) {
+            return new DragonClass[size];
+        }
+    };
 
     @NonNull
     public String getCourseID() {
@@ -72,17 +90,14 @@ public class DragonClass implements Parcelable {
         return parentMajorName;
     }
 
-    public static final Creator<DragonClass> CREATOR = new Creator<DragonClass>() {
-        @Override
-        public DragonClass createFromParcel(Parcel in) {
-            return new DragonClass(in);
-        }
+    @NonNull
+    public String getDependencies() {
+        return dependencies;
+    }
 
-        @Override
-        public DragonClass[] newArray(int size) {
-            return new DragonClass[size];
-        }
-    };
+    public void setDependencies(@NonNull String dependencies) {
+        this.dependencies = dependencies;
+    }
 
     @Override
     public int describeContents() {
@@ -96,5 +111,6 @@ public class DragonClass implements Parcelable {
         parcel.writeString(courseDescription);
         parcel.writeString(coursePrerequisites);
         parcel.writeString(parentMajorName);
+        parcel.writeString(dependencies);
     }
 }

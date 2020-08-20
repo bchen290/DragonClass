@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.robolancers.dragonclass.R;
 import com.robolancers.dragonclass.room.DragonClassDatabase;
 import com.robolancers.dragonclass.room.entities.DragonClass;
@@ -109,9 +108,10 @@ public class Utility {
                         }
 
                         Gson gson = new Gson();
+                        List<DragonClass> dragonClasses = DragonClassDatabase.getDatabase(activity).dragonClassDao().getListOfAllClasses();
 
                         for (Map.Entry<String, List<String>> dependency : dependencies.entrySet()) {
-                            DragonClass dragonClass = DragonClassDatabase.getDatabase(activity).dragonClassDao().getClassByCourseID(dependency.getKey()).getValue().get(0);
+                            DragonClass dragonClass = dragonClasses.stream().filter(dragonClass1 -> dragonClass1.getCourseID().equals(dependency.getKey())).findFirst().get();
                             dragonClass.setDependencies(gson.toJson(dependency.getValue()));
                             DragonClassDatabase.getDatabase(activity).dragonClassDao().insert(dragonClass);
                         }

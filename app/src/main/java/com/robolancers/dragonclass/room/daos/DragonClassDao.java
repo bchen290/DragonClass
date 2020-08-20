@@ -1,8 +1,6 @@
 package com.robolancers.dragonclass.room.daos;
 
 import com.robolancers.dragonclass.room.entities.DragonClass;
-import com.robolancers.dragonclass.room.entities.DragonMajor;
-import com.robolancers.dragonclass.room.relationships.DragonMajorWithDragonClasses;
 
 import java.util.List;
 
@@ -11,7 +9,6 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Transaction;
 
 @Dao
 public interface DragonClassDao {
@@ -23,6 +20,9 @@ public interface DragonClassDao {
 
     @Query("SELECT * from class_table ORDER BY course_id ASC")
     LiveData<List<DragonClass>> getAllClasses();
+
+    @Query("SELECT * from class_table ORDER BY course_id ASC")
+    List<DragonClass> getListOfAllClasses();
 
     @Query("SELECT * FROM class_table WHERE parent_major_name = :majorName")
     LiveData<List<DragonClass>> getClassesWithMajor(String majorName);
