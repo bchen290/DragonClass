@@ -8,8 +8,10 @@ import com.robolancers.dragonclass.room.entities.DragonMajor;
 import com.robolancers.dragonclass.utilities.AppExecutors;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 public class DragonMajorRepository {
     private DragonMajorDao dragonMajorDao;
@@ -27,5 +29,11 @@ public class DragonMajorRepository {
 
     public void insert(DragonMajor dragonMajor) {
         AppExecutors.getInstance().diskIO().execute(() -> dragonMajorDao.insert(dragonMajor));
+    }
+
+    public LiveData<List<DragonMajor>> searchByMajorName(String majorName) {
+        MutableLiveData<List<DragonMajor>> temp = new MutableLiveData<>();
+        temp.setValue(allMajors.getValue().stream().filter(dragonMajor -> dragonMajor.getMajorName().equals(majorName)).collect(Collectors.toList()));
+        return temp;
     }
 }
