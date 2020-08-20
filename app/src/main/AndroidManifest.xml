@@ -26,7 +26,11 @@
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".activities.DragonClassDetailActivity" />
-        <activity android:name=".activities.DragonMajorClassesActivity" />
+        <activity
+            android:name=".activities.DragonClassDetailActivity"
+            android:parentActivityName=".activities.DragonMajorClassesActivity"/>
+        <activity
+            android:name=".activities.DragonMajorClassesActivity"
+            android:parentActivityName=".activities.DragonMajorListActivity"/>
     </application>
 </manifest>
