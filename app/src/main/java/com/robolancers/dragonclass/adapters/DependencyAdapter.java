@@ -10,13 +10,11 @@ import android.widget.TextView;
 import com.robolancers.dragonclass.R;
 import com.robolancers.dragonclass.activities.DragonClassDetailActivity;
 import com.robolancers.dragonclass.room.DragonClassDatabase;
-import com.robolancers.dragonclass.room.entities.DragonClass;
 import com.robolancers.dragonclass.utilities.CourseNotFoundException;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.DependencyViewHolder> {
@@ -69,15 +67,15 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.De
 
             dependencyItemView.setOnClickListener(view -> {
                 if (!courseID.equals("This course has no dependencies")) {
-                        DragonClassDatabase.getDatabase(context).dragonClassDao().getAllClasses().observe((DragonClassDetailActivity) context, dragonClasses -> {
-                            try {
-                                Intent intent = new Intent(context, DragonClassDetailActivity.class);
-                                intent.putExtra("DragonClass", dragonClasses.stream().filter(dragonClass -> dragonClass.getCourseID().equals(courseID)).findFirst().orElseThrow(CourseNotFoundException::new));
-                                context.startActivity(intent);
-                            } catch (CourseNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                        });
+                    DragonClassDatabase.getDatabase(context).dragonClassDao().getAllClasses().observe((DragonClassDetailActivity) context, dragonClasses -> {
+                        try {
+                            Intent intent = new Intent(context, DragonClassDetailActivity.class);
+                            intent.putExtra("DragonClass", dragonClasses.stream().filter(dragonClass -> dragonClass.getCourseID().equals(courseID)).findFirst().orElseThrow(CourseNotFoundException::new));
+                            context.startActivity(intent);
+                        } catch (CourseNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    });
                 }
             });
         }
