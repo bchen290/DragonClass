@@ -3,6 +3,8 @@ package com.robolancers.dragonclass.room.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -117,5 +119,23 @@ public class DragonClass implements Parcelable {
         parcel.writeString(coursePrerequisites);
         parcel.writeString(parentMajorName);
         parcel.writeString(dependencies);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DragonClass that = (DragonClass) o;
+        return courseID.equals(that.courseID) &&
+                courseName.equals(that.courseName) &&
+                courseDescription.equals(that.courseDescription) &&
+                coursePrerequisites.equals(that.coursePrerequisites) &&
+                parentMajorName.equals(that.parentMajorName) &&
+                dependencies.equals(that.dependencies);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseID, courseName, courseDescription, coursePrerequisites, parentMajorName, dependencies);
     }
 }

@@ -24,6 +24,6 @@ public interface DragonClassDao {
     @Query("SELECT * from class_table ORDER BY course_id ASC")
     List<DragonClass> getListOfAllClasses();
 
-    @Query("SELECT * FROM class_table WHERE parent_major_name = :majorName")
+    @Query("SELECT * FROM class_table WHERE parent_major_name = :majorName ORDER BY course_id ASC")
     LiveData<List<DragonClass>> getClassesWithMajor(String majorName);
 }

@@ -38,7 +38,7 @@ public class DragonClassDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dragon_class_detail);
 
         gson = new Gson();
-        type = new TypeToken<List<String>>(){}.getType();
+        type = new TypeToken<List<DragonClass>>(){}.getType();
 
         courseID = findViewById(R.id.course_id);
         courseDescription = findViewById(R.id.course_description);
@@ -55,7 +55,7 @@ public class DragonClassDetailActivity extends AppCompatActivity {
             courseID.setText(dragonClass.getCourseID());
             courseDescription.setText(dragonClass.getCourseDescription());
 
-            List<String> courses;
+            List<DragonClass> courses;
 
             if (!dragonClass.getDependencies().isEmpty()) {
                 courses = gson.fromJson(dragonClass.getDependencies(), type);
@@ -64,9 +64,9 @@ public class DragonClassDetailActivity extends AppCompatActivity {
             }
 
             if (courses != null && !courses.isEmpty()) {
-                dependencyAdapter.setCourseIDs(courses);
+                dependencyAdapter.setCourses(courses);
             } else {
-                dependencyAdapter.setCourseIDs(Collections.singletonList("This course has no dependencies"));
+                dependencyAdapter.setCourses(Collections.singletonList(new DragonClass("This course has no dependencies","", "","", "", "")));
             }
         }
     }

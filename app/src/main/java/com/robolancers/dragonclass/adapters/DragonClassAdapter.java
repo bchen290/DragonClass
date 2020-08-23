@@ -13,6 +13,7 @@ import com.robolancers.dragonclass.activities.DragonClassDetailActivity;
 import com.robolancers.dragonclass.room.entities.DragonClass;
 import com.robolancers.dragonclass.room.entities.DragonMajor;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 

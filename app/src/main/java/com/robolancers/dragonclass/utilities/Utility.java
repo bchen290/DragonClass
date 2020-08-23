@@ -53,7 +53,7 @@ public class Utility {
                 if (response.statusCode() < 400) {
                     Document document = response.parse();
                     Elements links = document.getElementsByAttributeValueStarting("href", "/coursedescriptions/quarter/undergrad/");
-                    HashMap<String, List<String>> dependencies = new HashMap<>();
+                    HashMap<String, List<DragonClass>> dependencies = new HashMap<>();
 
                     for (Element link : links) {
                         DragonClassDatabase.getDatabase(activity).dragonMajorDao().insert(new DragonMajor(link.text()));
@@ -105,14 +105,14 @@ public class Utility {
                                     String prerequisiteCourseID = (prerequisiteSplit[0].replaceAll("\\(", "") + prerequisiteSplit[1]);
 
                                     if (dependencies.containsKey(prerequisiteCourseID)) {
-                                        if (!dependencies.getOrDefault(prerequisiteCourseID, new ArrayList<>()).contains(dragonClass.getCourseID().replace("\\s", ""))) {
+                                        if (!dependencies.getOrDefault(prerequisiteCourseID, new ArrayList<>()).contains(dragonClass)) {
                                             dependencies.computeIfPresent(prerequisiteCourseID, (k, v) -> {
-                                                v.add(dragonClass.getCourseID());
+                                                v.add(dragonClass);
                                                 return v;
                                             });
                                         }
                                     } else {
-                                        dependencies.put(prerequisiteCourseID, new ArrayList<>(Collections.singletonList(dragonClass.getCourseID().replace("\\s", ""))));
+                                        dependencies.put(prerequisiteCourseID, new ArrayList<>(Collections.singletonList(dragonClass)));
                                     }
                                 }
                             }
@@ -121,7 +121,7 @@ public class Utility {
 
                     Gson gson = new Gson();
 
-                    for (Map.Entry<String, List<String>> dependency : dependencies.entrySet()) {
+                    for (Map.Entry<String, List<DragonClass>> dependency : dependencies.entrySet()) {
                         Optional<DragonClass> optionalDragonClass = allClasses.stream().filter(dragonClass -> dragonClass.getCourseID().equals(dependency.getKey())).findFirst();
 
                         if (optionalDragonClass.isPresent()) {

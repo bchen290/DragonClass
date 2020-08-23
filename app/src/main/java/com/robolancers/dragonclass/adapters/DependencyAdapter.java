@@ -10,8 +10,10 @@ import android.widget.TextView;
 import com.robolancers.dragonclass.R;
 import com.robolancers.dragonclass.activities.DragonClassDetailActivity;
 import com.robolancers.dragonclass.room.DragonClassDatabase;
+import com.robolancers.dragonclass.room.entities.DragonClass;
 import com.robolancers.dragonclass.utilities.CourseNotFoundException;
 
+import java.util.Comparator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -19,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.DependencyViewHolder> {
     private final LayoutInflater inflater;
-    private List<String> courseIDs;
+    private List<DragonClass> courses;
     private Context context;
 
     public DependencyAdapter(Context context) {
@@ -36,21 +38,21 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.De
 
     @Override
     public void onBindViewHolder(@NonNull DependencyViewHolder holder, int position) {
-        if (courseIDs != null) {
-            holder.bind(courseIDs.get(position));
+        if (courses != null) {
+            holder.bind(courses.get(position));
         } else {
             holder.dependencyItemView.setText("N/A");
         }
     }
 
-    public void setCourseIDs(List<String> courseIDs) {
-        this.courseIDs = courseIDs;
+    public void setCourses(List<DragonClass> courseIDs) {
+        this.courses = courseIDs;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return courseIDs != null ? courseIDs.size() : 0;
+        return courses != null ? courses.size() : 0;
     }
 
     @SuppressWarnings("InnerClassMayBeStatic")
@@ -62,22 +64,18 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.De
             dependencyItemView = itemView.findViewById(R.id.textView);
         }
 
-        public void bind(String courseID) {
-            dependencyItemView.setText(courseID);
+        public void bind(DragonClass course) {
+            if (!course.getCourseID().equals("This course has no dependencies")) {
+                dependencyItemView.setText(course.getCourseID() + ": " + course.getCourseName());
 
-            dependencyItemView.setOnClickListener(view -> {
-                if (!courseID.equals("This course has no dependencies")) {
-                    DragonClassDatabase.getDatabase(context).dragonClassDao().getAllClasses().observe((DragonClassDetailActivity) context, dragonClasses -> {
-                        try {
-                            Intent intent = new Intent(context, DragonClassDetailActivity.class);
-                            intent.putExtra("DragonClass", dragonClasses.stream().filter(dragonClass -> dragonClass.getCourseID().equals(courseID)).findFirst().orElseThrow(CourseNotFoundException::new));
-                            context.startActivity(intent);
-                        } catch (CourseNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                }
-            });
+                dependencyItemView.setOnClickListener(view -> DragonClassDatabase.getDatabase(context).dragonClassDao().getAllClasses().observe((DragonClassDetailActivity) context, dragonClasses -> {
+                    Intent intent = new Intent(context, DragonClassDetailActivity.class);
+                    intent.putExtra("DragonClass", course);
+                    context.startActivity(intent);
+                }));
+            } else {
+                dependencyItemView.setText(course.getCourseID());
+            }
         }
     }
 }
