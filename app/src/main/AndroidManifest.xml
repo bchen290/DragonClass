@@ -31,6 +31,10 @@
             android:parentActivityName=".activities.DragonMajorClassesActivity"/>
         <activity
             android:name=".activities.DragonMajorClassesActivity"
-            android:parentActivityName=".activities.DragonMajorListActivity"/>
+            android:parentActivityName=".activities.DragonMajorListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
