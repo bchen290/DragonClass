@@ -15,7 +15,7 @@ Dragon Class is an app that scrapes data off of Drexel's catalog and presents it
 - View dependecies in depth
 
 ## <div id="install"> Installation </div>
-Download apk from [here](https://github.com/bchen290/DragonClass/releases/tag/1.0) and open apk to install
+Download apk from [here](https://github.com/bchen290/DragonClass/releases/) and open apk to install
 
 ##  <div id="license">  License </div>
 
