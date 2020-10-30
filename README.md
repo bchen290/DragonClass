@@ -4,6 +4,8 @@
 # Dragon Class
 Dragon Class is an app that scrapes data off of Drexel's catalog and presents it in an intuitive way. It allows users to search through majors and classes and view dependencies between classes.
 
+![Overview Gif](images/DragonClassOverview.gif)
+
 ## Table of Content
 * [Features](#feature) 
 * [Installation](#install) 
